@@ -437,7 +437,7 @@ LCD RW   : P0.17
 
 ### 4×4 Keypad
 
-<img src="Pictures/Keypad.jpeg" width="300">
+<img src="Pictures/Keypad.png" width="250">
 </p>
 
 ``` text
@@ -447,7 +447,7 @@ Cols : P1.20 – P1.23
 
 ### SPI EEPROM
 
-<img src="Pictures/SPI EEEPROM.jpeg" width="300">
+<img src="Pictures/SPI EEPROM.jpeg" width="300">
 </p>
 
 ``` text
@@ -530,8 +530,14 @@ SecureEntry-OTP-GSM-Based-Two-Step-Time-Limited-Door-Access-System/
 │   └── SecureEntry OTP GSM Based Two-Step Time-Limited Door Access System.uvproj
 │
 ├── 📁 Pictures/
+│   ├── GSM.jpeg
+│   ├── Keypad.png
+│   ├── L293D Motor Driver.jpeg
+│   ├── LCD.jpeg
 │   ├── Outputs On LCD 1.jpeg
 │   ├── Outputs On LCD 2.jpeg
+│   ├── SPI EEPROM.jpeg
+│   ├── Switch.jpeg
 │   ├── System Architecture.png
 │   └── System WorkFlow.png
 │

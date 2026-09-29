@@ -94,60 +94,9 @@ for an embedded access-control demonstration.
 
 ## 🏗️ System Architecture
 
-``` text
-                         ┌─────────────────────┐
-                         │      USER           │
-                         └──────────┬──────────┘
-                                    │
-                           User ID / Password
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │   LPC214x ARM7 MCU  │
-                         │                     │
-                         │ Authentication      │
-                         │ OTP Generation      │
-                         │ Security Logic      │
-                         │ Door Control        │
-                         └──────┬──────┬───────┘
-                                │      │
-                  ┌─────────────┘      └──────────────┐
-                  ▼                                   ▼
-        ┌─────────────────┐                  ┌─────────────────┐
-        │ 25LC512 EEPROM  │                  │   GSM Module    │
-        │                 │                  │                 │
-        │ Users           │                  │ OTP SMS         │
-        │ Passwords       │                  │ BLOCK/UNBLOCK   │
-        │ Status          │                  │ Network Status  │
-        └─────────────────┘                  └─────────────────┘
-                  │
-                  │
-                  ▼
-        ┌─────────────────┐
-        │      RTC        │
-        │                 │
-        │ Time / Date     │
-        │ OTP timing      │
-        └─────────────────┘
-
-                  LPC214x
-                     │
-                     ▼
-             ┌───────────────┐
-             │ L293D Driver  │
-             └───────┬───────┘
-                     │
-                     ▼
-               ┌───────────┐
-               │ DC Motor  │
-               │ Door      │
-               └───────────┘
-
-       ┌─────────────┐       ┌─────────────┐
-       │ 4×4 Keypad  │       │ 16×2 LCD    │
-       └─────────────┘       └─────────────┘
-```
-
+<p align="center">
+  <img src="Pictures/System Architecture.png" width="900">
+</p>
 ------------------------------------------------------------------------
 
 ## 🔐 Authentication Flow
@@ -444,6 +393,15 @@ processing is performed safely in the main application loop.
 
 ------------------------------------------------------------------------
 
+## 🔄 Complete System Workflow
+
+<p align="center">
+  <img src="Pictures/System WorkFlow.png" width="900">
+</p>
+
+
+------------------------------------------------------------------------
+
 ## 🔌 Hardware Components
 
   Component                  Purpose
@@ -519,57 +477,68 @@ Motor IN2 : P0.21
 
 ## 📂 Project Structure
 
-``` text
-SecureEntry/
+A typical project structure is:
+
+```text
+SecureEntry-OTP-GSM-Based-Two-Step-Time-Limited-Door-Access-System/
 │
-├── main.c
+├── 📁 Header Files/
+│   ├── defines.h
+│   ├── delay.h
+│   ├── door.h
+│   ├── door_cgram.h
+│   ├── eint1.h
+│   ├── gsm.h
+│   ├── kpm.h
+│   ├── kpm_defines.h
+│   ├── lcd.h
+│   ├── lcd_defines.h
+│   ├── otp.h
+│   ├── rtc.h
+│   ├── spi.h
+│   ├── spi_defines.h
+│   ├── spi_eeprom.h
+│   ├── spi_eeprom_defines.h
+│   ├── switch.h
+│   ├── types.h
+│   ├── uart.h
+│   ├── uart_defines.h
+│   └── user.h
 │
-├── user.c
-├── user.h
+├── 📁 Hex File/
+│   └── SecureEntry OTP GSM Based Two-Step Time-Limited Door Access System.hex
 │
-├── otp.c
-├── otp.h
+├── 📁 Keil Project File/
+│   └── SecureEntry OTP GSM Based Two-Step Time-Limited Door Access System.uvproj
 │
-├── gsm.c
-├── gsm.h
+├── 📁 Pictures/
+│   ├── Outputs On LCD 1.jpeg
+│   ├── Outputs On LCD 2.jpeg
+│   ├── System Architecture.png
+│   └── System WorkFlow.png
 │
-├── door.c
-├── door.h
-├── door_cgram.c
-├── door_cgram.h
+├── 📁 Setup and Installation Steps/
+│   └── Setup and Installation Steps.pdf
+│ 
+├── 📁 Source Files/
+│   ├── delay.c
+│   ├── door.c
+│   ├── door_cgram.c
+│   ├── eint1.c
+│   ├── gsm.c
+│   ├── kpm.c
+│   ├── lcd.c
+│   ├── main.c
+│   ├── otp.c
+│   ├── rtc.c
+│   ├── spi.c
+│   ├── spi_eeprom.c
+│   ├── switch.c
+│   ├── uart.c
+│   └── user.c
 │
-├── rtc.c
-├── rtc.h
-│
-├── spi.c
-├── spi.h
-├── spi_defines.h
-│
-├── spi_eeprom.c
-├── spi_eeprom.h
-├── spi_eeprom_defines.h
-│
-├── lcd.c
-├── lcd.h
-├── lcd_defines.h
-│
-├── Keypad.c
-├── kpm.h
-├── kpm_defines.h
-│
-├── uart.c
-├── uart.h
-├── uart_defines.h
-│
-├── eint.c
-├── eint.h
-│
-├── switch.c
-├── switch.h
-│
-├── delay.h
-├── defines.h
-└── types.h
+└── README.md
+ 
 ```
 
 ------------------------------------------------------------------------
@@ -597,92 +566,6 @@ hardware/function block can be developed and tested separately.
   `switch.c`       User-management switch interface
   `delay.h`        Delay routines
   `types.h`        Project data types
-
-------------------------------------------------------------------------
-
-## 🔄 Complete System Workflow
-
-``` text
-                 POWER ON
-                    │
-                    ▼
-             Initialize LCD
-                    │
-                    ▼
-             Initialize Keypad
-                    │
-                    ▼
-          Initialize Interrupt
-                    │
-                    ▼
-            Initialize UART
-                    │
-                    ▼
-             Initialize GSM
-                    │
-                    ▼
-             Check GSM Network
-                    │
-                    ▼
-              Initialize RTC
-                    │
-                    ▼
-              Initialize OTP
-                    │
-                    ▼
-           Initialize EEPROM
-                    │
-                    ▼
-             Initialize Door
-                    │
-                    ▼
-          Initialize Door CGRAM
-                    │
-                    ▼
-              MAIN LOOP
-                    │
-          ┌─────────┴─────────┐
-          │                   │
-          ▼                   ▼
-     Check SMS          Check Interrupt
-          │                   │
-          │                   ▼
-          │             User Management
-          │
-          ▼
-      Normal Login
-          │
-          ▼
-    User ID + Password
-          │
-          ▼
-      Authentication
-          │
-          ▼
-       Generate OTP
-          │
-          ▼
-       GSM SMS OTP
-          │
-          ▼
-        Enter OTP
-          │
-          ▼
-     Verify + Timeout
-          │
-       ┌──┴──┐
-       │     │
-      FAIL  PASS
-       │     │
-       ▼     ▼
-    Deny    Open Door
-              │
-              ▼
-          Wait 10 sec
-              │
-              ▼
-          Close Door
-```
 
 ------------------------------------------------------------------------
 
@@ -784,23 +667,6 @@ Door Open Delay
 Door Closing
 ```
 
-For a professional GitHub presentation, add screenshots or a short
-demonstration video here.
-
-### 📸 Suggested screenshots
-
-``` text
-docs/
-├── startup.png
-├── gsm-connected.png
-├── login.png
-├── otp-sms.png
-├── otp-verification.png
-├── door-opening.png
-├── door-closing.png
-└── user-management.png
-```
-
 ------------------------------------------------------------------------
 
 ## 🧠 Why This Project Is Useful
@@ -867,6 +733,59 @@ The current project is intended primarily for **academic learning,
 demonstration, and embedded-system development**.
 
 ------------------------------------------------------------------------
+
+### LCD OUTPUTS
+
+<img src="Pictures/Outputs On LCD 1.jpeg" width="600">
+
+<img src="Pictures/Outputs On LCD 2.jpeg" width="600">
+
+
+## 📍 Applications
+
+SecureEntry can be adapted for different environments where controlled and time-limited access is required.
+
+### 🏠 Residential Door Security
+- Two-step authentication using User ID, Password, and OTP.
+- OTP is sent to the registered mobile number.
+- Automatic door opening after successful authentication.
+
+### 🏢 Office & Workplace Access
+- Controlled access to offices, cabins, laboratories, and restricted rooms.
+- User accounts can be added, modified, blocked, or unblocked.
+
+### 🧪 Laboratories & Educational Institutions
+- Suitable for restricting access to electronics, computer, communication, and research laboratories.
+- Demonstrates practical ARM7, GSM, EEPROM, RTC, keypad, LCD, and motor-control technologies.
+
+### 🗄️ Server Rooms & Restricted Areas
+- Provides an additional authentication layer for restricted areas.
+- Temporary OTP verification helps control access.
+
+### 🏭 Industrial Access Control
+- Can be adapted for control rooms, machinery rooms, storage areas, and other restricted locations.
+- The DC motor interface can be adapted to an appropriate door actuator.
+
+### 📱 Remote User Blocking
+- Administrators can remotely block or unblock registered users through SMS.
+- Supported commands:
+  - `BLOCK <USER_ID>`
+  - `UNBLOCK <USER_ID>`
+
+### 🎓 Embedded-System Demonstration
+This project is also useful for demonstrating:
+
+- ARM7 microcontroller programming
+- Embedded C
+- Two-step authentication
+- OTP-based access control
+- GSM/SMS communication
+- SPI EEPROM
+- RTC-based timing
+- LCD and keypad interfacing
+- External interrupts
+- L293D and DC motor control
+
 
 ## 🚀 Future Improvements
 

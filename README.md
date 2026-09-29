@@ -425,6 +425,9 @@ The pin assignments below are taken from the project source files.
 
 ### LCD
 
+  <img src="Pictures/LCD.jpeg" width="300">
+</p>
+
 ``` text
 LCD Data : P0.6 – P0.13
 LCD RS   : P0.16
@@ -434,12 +437,18 @@ LCD RW   : P0.17
 
 ### 4×4 Keypad
 
+<img src="Pictures/Keypad.jpeg" width="300">
+</p>
+
 ``` text
 Rows : P1.16 – P1.19
 Cols : P1.20 – P1.23
 ```
 
 ### SPI EEPROM
+
+<img src="Pictures/SPI EEEPROM.jpeg" width="300">
+</p>
 
 ``` text
 SPI0 SCK  : P0.4
@@ -450,6 +459,9 @@ CS        : P0.7
 
 ### GSM / UART0
 
+<img src="Pictures/GSM.jpeg" width="300">
+</p>
+
 ``` text
 TXD0 : P0.0
 RXD0 : P0.1
@@ -457,12 +469,18 @@ RXD0 : P0.1
 
 ### External Interrupt
 
+<img src="Pictures/Switch.jpeg" width="300">
+</p>
+
 ``` text
 EINT1 : P0.3
 VIC channel : 15
 ```
 
 ### Door Motor Driver
+
+<img src="Pictures/L293D Motor Driver.jpeg" width="300">
+</p>
 
 ``` text
 Motor IN1 : P0.20

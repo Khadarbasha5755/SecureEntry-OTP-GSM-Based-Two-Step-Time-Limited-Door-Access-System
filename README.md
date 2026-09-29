@@ -60,19 +60,19 @@ The system uses two authentication stages:
          │
          ▼
    Password Valid?
-      │       │
-     NO      YES
-      │       │
-      ▼       ▼
-   Security   Generate OTP
-    Check         │
-                  ▼
-          Send OTP through GSM
-                  │
-                  ▼
-               Enter OTP
-                  │
-                  ▼
+     │         │
+     NO       YES
+     │         │
+     ▼         ▼
+ Security  Generate OTP
+  Check        │
+               ▼
+        Send OTP through GSM
+               │
+               ▼
+            Enter OTP
+               │
+               ▼
           OTP valid & < 60 sec?
             │             │
             NO           YES
